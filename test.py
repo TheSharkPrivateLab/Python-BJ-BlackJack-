@@ -90,6 +90,12 @@ def	tour_joueur(joueur1,d_joueur):
                     total += d_joueur[i][2]
                     i+=1
                 print "point total : ", total
+                if total  > 21:
+                    print "domage la banque gagne vous avez depassee les 21 pts\n"    
+                    return 0
+                elif total == 21:
+                    print "VOUS GAGNEZ AVEC UN BLACKJACK"
+                    return 0
 	    else:
                 i = 0
                 while d_joueur[i]!= 0:
@@ -120,25 +126,45 @@ def     init_joueur(d_joueur):
     d_joueur =  choix_carte(d_joueur)
     print "le croupier vous donne la carte", d_joueur[0][1],"avec une valeur de ",d_joueur[0][2],"\n" 
     return d_joueur
+
+def oneP(d_joueur,d_bank,joueur1):
+    while 1:
+         init_joueur(d_joueur)
+         init_bank(d_bank)
+         d_joueur = tour_joueur(joueur1,d_joueur)
+         if d_joueur == 0:
+             break
+         d_bank = tour_bank(d_bank)
+         if d_joueur - d_bank > 0:
+             print "Vous avez gagne " + joueur1 + "\n"
+         else:
+             print "domage la banque gagne avec ", d_bank , "points contre", d_joueur
+         break
+    return 0
+
         
 def main(a):
+        d_joueur = [0,0,0,0,0,0,0,0]
+        d_joueur2 = [0,0,0,0,0,0,0,0]
+        d_joueur3 = [0,0,0,0,0,0,0,0]
+        d_bank = [0,0,0,0,0,0,0,0]
+
 	if a == 1:
-		joueur1 = create_player(raw_input("quel est votre nom joueur1 ? \n"))
-		d_joueur = [0,0,0,0,0,0,0,0]
-                d_bank = [0,0,0,0,0,0,0,0]
-	else:
-		print "dont fuck with me and pick a number betwen 1 and 1"
-              	main(input("combien de joueur ?\n"))
-	while 1:
-                init_joueur(d_joueur)
-                init_bank(d_bank)
-                #print deck
-		d_joueur = tour_joueur(joueur1,d_joueur)
-                d_bank = tour_bank(d_bank)
-                if d_joueur - d_bank > 0:
-                    print "Vous avez gagne "
-                else:
-                   print "domage la banque gagne avec ", d_bank , "points contre", d_joueur
-	        break
-	return 0
+	    joueur1 = create_player(raw_input("quel est votre nom joueur 1 ? \n"))
+            oneP(d_joueur,d_bank,joueur1)
+            return 0
+
+        elif a == 2:
+            joueur1 = create_player(raw_input("quel est votre nom joueur 1 ? \n"))
+            joueur2 = create_player(raw_input("quel est votre nom joueur 2 ?\n"))
+        elif a == 3:
+            joueur1 = create_player(raw_input("quel est votre nom joueur 1 ?\n"))
+            joueur2 = create_player(raw_input("quel est votre nom joueur 2 ?\n")) 
+            joueur3 = create_player(raw_input("quel est votre nom joueur 3 ?\n")) 
+    	
+        else:
+            print "dont fuck with me and pick a number betwen 1 and 333"
+            main(input("combien de joueur ?\n"))
+                    
+
 main(input("combien de joueur ?\n"))
